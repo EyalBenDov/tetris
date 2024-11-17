@@ -60,11 +60,25 @@ class Shapes {
             };
         return list_to_ptr(nums[rotation]);
         }
-
-        int get_width(int shape, int rotation);
-        int get_height(int shape, int rotation);
         
-        int** get_shape(int rotation);
+        int** get_shape(int rotation) {
+            switch(shape_type) {
+                case 0:
+                    return get_O(rotation);
+                case 1:
+                    return get_I(rotation);
+                case 2:
+                    return get_S(rotation);
+                case 3:
+                    return get_Z(rotation);
+                case 4:
+                    return get_L(rotation);
+                case 5:
+                    return get_J(rotation);
+                case 6:
+                    return get_T(rotation);
+            }
+        }
 
     private:
         int** list_to_ptr(int list[4][2]) {
