@@ -1,4 +1,6 @@
 #include <iostream>
+#ifndef SHAPES_H
+#define SHAPES_H
 
 class Shapes {
     public:
@@ -16,3 +18,4 @@ class Shapes {
     private:
         int** listToPtr(int list[4][2]);
 };
+#endif

@@ -1,17 +1,30 @@
 #include <iostream>
+#include <string>
 
+#ifndef BOARD_H
+#define BOARD_H
 class Board {
     public:
-        Board(unsigned int board_width, unsigned int board_height);
-        void newPiece(int pieceType);
+        Board(unsigned int boardWidth, unsigned int boardHeight);
+        void initializeBoard();
+        void newPiece();
         void movePiece(int direction);
         void rotatePiece();
         void printBoard();
-        void initializeBoard();
         void updateBoard();
         void moveDown();
-    private:  
+        bool isOver();
+    private:
         int width;
         int height;
+        char ***board;
+        int location[2];
+        bool gameEnded;
+        bool pieceOnGround;
+        int currentRotation;
+        int latestShape;
+        std::string colorList[7];
+        std::string currentColor;
 
 };
+#endif
