@@ -11,7 +11,6 @@ Board::Board() {
     location[0] = 0;
     location[1] = 0;
     currentRotation = 0;
-    gameEnded = false;
     pieceOnGround = false;
     latestShape = -1;
 }
@@ -124,6 +123,25 @@ int Board::updateBoard() {
         }
     }
     if (!stopMoving) return 0;
+    for (int i = 0; i < 4; i += 1) { 
+        board[points[i][1]][points[i][0]] = currentColor + "  ";
+    }
+    bool bottom_full = true;
+    while (bottom_full) {
+        for (int j = 0; j < width; j++) {
+            if (board[height-1][j] == "") {
+                bottom_full = false;
+                break;
+            }
+        }
+        if (!bottom_full) break;
+        for (int i = height-1; i > 0; i++) {
+            for (int j = 0; j < width; j++) {
+                board[i][j] = board[i-1][j];
+            }
+        }
+    }
+    return 1;
 }
 
 void Board::moveDown() {
@@ -140,5 +158,9 @@ void Board::moveDown() {
 
 
 bool Board::isOver() {
-    return gameEnded;
+    for (int j = 0; j < width; j++) {
+        if (board[0][j] != "" && board[0][j] != "-")
+            return true;
+    }
+    return false;
 }
