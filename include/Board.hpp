@@ -17,13 +17,12 @@ class Board {
     private:
         int width;
         int height;
-        char ***board;
+        std::string **board;
         int location[2];
         bool gameEnded;
         bool pieceOnGround;
         int currentRotation;
         int latestShape;
-        std::string colorList[7];
         std::string currentColor;
 
 };

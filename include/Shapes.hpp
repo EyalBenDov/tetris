@@ -1,18 +1,19 @@
 #include <iostream>
+#include <array>
 #ifndef SHAPES_H
 #define SHAPES_H
 
 class Shapes {
     public:
-        Shapes(int shapeNumber) {};
+        Shapes(int shapeNumber);
         int shapeType;
-        int** getO(int rotation);
-        int** getI(int rotation);
-        int** getS(int rotation);
-        int** getZ(int rotation);
-        int** getL(int rotation);
-        int** getJ(int rotation);
-        int** getT(int rotation);
-        int** getShape(int rotation);
+        std::array<std::array<int, 2>, 4> getO(int rotation);
+        std::array<std::array<int, 2>, 4> getI(int rotation);
+        std::array<std::array<int, 2>, 4> getS(int rotation);
+        std::array<std::array<int, 2>, 4> getZ(int rotation);
+        std::array<std::array<int, 2>, 4> getL(int rotation);
+        std::array<std::array<int, 2>, 4> getJ(int rotation);
+        std::array<std::array<int, 2>, 4> getT(int rotation);
+        std::array<std::array<int, 2>, 4> getShape(int rotation);
 };
 #endif

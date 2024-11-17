@@ -1,68 +1,71 @@
 #include <iostream>
+#include <array>
 #include "../include/Shapes.hpp"
 
 
+std::array<std::array<int, 2>, 4> listToArr(int list[4][2]);
+
 Shapes::Shapes(int shapeNumber) : shapeType(shapeNumber) {};
 
-int** Shapes::getO(int rotation) {
+std::array<std::array<int, 2>, 4> Shapes::getO(int rotation) {
     int nums[4][2] = {{0, 0}, {1, 0}, {0, 1}, {1, 1}};
-    return listToPtr(nums);
+    return listToArr(nums);
 }
 
-int** Shapes::getI(int rotation) {
+std::array<std::array<int, 2>, 4> Shapes::getI(int rotation) {
     int nums[2][4][2] = {
         {{0, 0}, {0, 1}, {0, 2}, {0, 3}},
         {{-1, 0}, {0, 0}, {1, 0}, {2, 0}}
     };
-    return listToPtr(nums[rotation%2]);
+    return listToArr(nums[rotation%2]);
 }
 
-int** Shapes::getS(int rotation) {
+std::array<std::array<int, 2>, 4> Shapes::getS(int rotation) {
     int nums[2][4][2] = {
         {{0, 0}, {0, 1}, {1, 1}, {1, 2}},
         {{1, 0}, {0, 1}, {2, 0}, {1, 1}}
     };
-    return listToPtr(nums[rotation%2]);
+    return listToArr(nums[rotation%2]);
 }
 
-int** Shapes::getZ(int rotation) {
+std::array<std::array<int, 2>, 4> Shapes::getZ(int rotation) {
     int nums[2][4][2] = {
         {{1, 0}, {1, 1}, {0, 1}, {0, 2}},
         {{0, 0}, {1, 1}, {2, 1}, {1, 0}}
     };
-    return listToPtr(nums[rotation%2]);
+    return listToArr(nums[rotation%2]);
 }
 
-int** Shapes::getL(int rotation) {
+std::array<std::array<int, 2>, 4> Shapes::getL(int rotation) {
     int nums[4][4][2] = {
         {{0, 0}, {0, 1}, {0, 2}, {1, 2}},
         {{0, 1}, {-1, 1}, {1, 1}, {-1, 2}},
         {{0, 0}, {0, 1}, {0, 2}, {-1, 0}},
         {{0, 1}, {-1, 1}, {1, 1}, {1, 0}},
     };
-    return listToPtr(nums[rotation]);
+    return listToArr(nums[rotation]);
 }
-int** Shapes::getJ(int rotation) {
+std::array<std::array<int, 2>, 4> Shapes::getJ(int rotation) {
     int nums[4][4][2] = {
         {{1, 0}, {1, 1}, {1, 2}, {0, 2}},
         {{0, 0}, {0, 1}, {1, 1}, {2, 1}},
         {{0, 0}, {1, 0}, {0, 1}, {0, 2}},
         {{0, 0}, {1, 0}, {2, 0}, {2, 1}}
     };
-    return listToPtr(nums[rotation]);
+    return listToArr(nums[rotation]);
 }
 
-int** Shapes::getT(int rotation) {
+std::array<std::array<int, 2>, 4> Shapes::getT(int rotation) {
     int nums[4][4][2] = {
         {{1, 0}, {0, 1}, {1, 1}, {2, 1}},
         {{1, 0}, {1, 1}, {1, 2}, {2, 1}},
         {{0, 1}, {1, 1}, {2, 1}, {1, 2}},
         {{1, 0}, {1, 1}, {1, 2}, {0, 1}},
     };
-return listToPtr(nums[rotation]);
+return listToArr(nums[rotation]);
 }
 
-int** Shapes::getShape(int rotation) {
+std::array<std::array<int, 2>, 4> Shapes::getShape(int rotation) {
     switch(shapeType) {
         case 0:
             return getO(rotation);
@@ -82,13 +85,13 @@ int** Shapes::getShape(int rotation) {
             return getO(rotation);
     };
 }
-// Helper method, returns a pointer to an inputed list
-int** listToPtr(int list[4][2]) {
-    int** ptr = (int**) malloc(4*2*sizeof(int));
+
+std::array<std::array<int, 2>, 4> listToArr(int list[4][2]) {
+    std::array<std::array<int, 2>, 4> arr;
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 2; j++) {
-            ptr[i][j] = list[i][j];
+            arr[i][j] = list[i][j];
         }
-    }
-    return ptr;
+    // }
+    return arr;
 }

@@ -9,7 +9,7 @@ const std::string colorList[7] = {"\x1B[48;5;1m", "\x1B[48;5;2m", "\x1B[48;5;4m"
 Board::Board(unsigned int boardWidth, unsigned int boardHeight) {
     width = boardWidth;
     height = boardHeight;
-    board = (char***) calloc(height*width, sizeof(char)*12);
+    board = (std::string**) calloc(height*width, sizeof(char)*12);
     location[0] = 0;
     location[1] = 0;
     currentRotation = 0;
@@ -18,17 +18,11 @@ Board::Board(unsigned int boardWidth, unsigned int boardHeight) {
     latestShape = -1;
 }
 
-void Board::initializeBoard() {
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            board[i][j] = "";
-        }
-    }
-}
 void Board::newPiece() {
     latestShape = rand() % 7;
     Shapes newShape = Shapes(latestShape);
     int** points = newShape.getShape(0);
+    std::cout << "Made it here\n";
     currentRotation = 0;
     location[0] = width/2;
     location[1] = 0;
@@ -83,7 +77,11 @@ void Board::rotatePiece() {
 }
 void Board::printBoard() {
     std::cout << "\x1B[H";
-    std::cout << "┌" << std::string(width, '─') << '┐';
+    std::string line = "";
+    for (int i = 0; i < width; i++) {
+        line += "─";
+    }
+    std::cout << "┌" << line << "┐";
     std::string clearEffects = "\x1B[0m";
     for (int i = 0; i < height; i++) {
         std::string currentRow = "│";
@@ -101,16 +99,17 @@ void Board::printBoard() {
         currentRow += "│";
         std::cout << currentRow << "\n";
     }
-    std::cout << "└" << std::string(width, '─') << '┘';
+    std::cout << "└" << line << "┘";
 }
-void Board::updateBoard() {
 
+void Board::updateBoard() {
+    int i;
 };
 void Board::moveDown() {
-
+    int i;
 };
 
 
 bool Board::isOver() {
-    return isOver;
+    return gameEnded;
 }
