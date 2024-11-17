@@ -14,8 +14,5 @@ class Shapes {
         int** getJ(int rotation);
         int** getT(int rotation);
         int** getShape(int rotation);
-
-    private:
-        int** listToPtr(int list[4][2]);
 };
 #endif
