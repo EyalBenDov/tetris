@@ -88,14 +88,17 @@ void Board::rotatePiece() {
 
 void Board::printBoard() {
     system("clear");
+    std::cout << "\n";
+    std::cout << "\033[8m";
+    std::cout << "\033[0;0";
     std::string newBoard = "";
     std::string line = "";
     for (int i = 0; i < width*2; i++) {
         line += "─";
     }
     // newBoard += "┌" + line + "┐\n";
-    std::cout << "┌" + line + "┐" << std::endl;
     std::string clearEffects = "\x1B[0m";
+    std::cout << clearEffects << "┌" + line + "┐" << std::endl;
     for (int i = 0; i < height; i++) {
         std::string currentRow = "│";
         for (int j = 0; j < width; j++) {

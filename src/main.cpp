@@ -20,7 +20,9 @@ int main() {
     bool left_held = false;
     double downDelay = 400;  
     board.printBoard();
+    std::cout << "\033[?25l";
     while (true) {
+        std::cout << "\033[8m";
         bool change = false;
         if (keyPressed(0x0C)) break;
         if (keyPressed(0x7E)) {
@@ -67,5 +69,9 @@ int main() {
         }
         if (change)
             board.printBoard();
+            std::cout << "\033[8m";
     }
+    std::cout << "\033[?25h";
+    std::cout << "\033[28m";
+    system("clear");
 }
