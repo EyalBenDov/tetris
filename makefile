@@ -1,5 +1,5 @@
 game: Shapes.o Board.o main.o
-	g++ Shapes.o Board.o main.o -o tetris -lncurses
+	g++ Shapes.o Board.o main.o -o tetris -framework CoreGraphics
 	make clean
 
 Shapes.o: src/Shapes.cpp

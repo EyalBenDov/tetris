@@ -46,7 +46,11 @@ void Board::movePiece(int direction) {
         int x = location[0] + points[i][0];
         if (x + direction >= width || x + direction < 0) {
             valid = false;
-        } 
+            break;
+        } else if (board[location[1]+points[i][1]][x+direction] != "" && board[location[1]+points[i][1]][x+direction] != "-") {
+            valid = false;
+            break;
+        }
     }
     if (!valid) {
         return;
@@ -102,7 +106,7 @@ void Board::printBoard() {
                 currentRow += clearEffects + "  ";
             }
             else {
-                currentRow += current;
+                currentRow += current + clearEffects;
             }
         }
         currentRow += "│";
@@ -114,7 +118,7 @@ void Board::printBoard() {
     // const char *newBoardChar = newBoard.c_str();
     // std::cout << newBoardChar;
 }
-// TODO: FINISH FUNCTION
+
 int Board::updateBoard() {
     Shapes shape = Shapes(latestShape);
     std::array<std::array<int, 2>, 4> points = shape.getShape(currentRotation);
@@ -124,7 +128,7 @@ int Board::updateBoard() {
             stopMoving = true;
             break;
         }
-        if (board[points[i][1]+1][points[i][0]] != "" && board[points[i][1]+1][points[i][0]] != "-") {
+        if (board[points[i][1]+1+location[1]][points[i][0]+location[0]] != "" && board[points[i][1]+1+location[1]][points[i][0]+location[0]] != "-") {
             stopMoving = true;
             break;
         }
@@ -135,14 +139,22 @@ int Board::updateBoard() {
     }
     bool bottom_full = true;
     while (bottom_full) {
-        for (int j = 0; j < width; j++) {
-            if (board[height-1][j] == "") {
-                bottom_full = false;
+        int row = -1;
+        for (int i = height-1; i > 0; i--) {
+            bool row_full = true;
+            for (int j = 0; j < width; j++) {
+                if (board[i][j] == "") {
+                    row_full = false;
+                    break;
+                }
+            }
+            if (row_full) {
+                row = i;
                 break;
             }
         }
-        if (!bottom_full) break;
-        for (int i = height-1; i > 1; i++) {
+        if (row == -1) break;
+        for (int i = row; i > 1; i--) {
             for (int j = 0; j < width; j++) {
                 board[i][j] = board[i-1][j];
             }
@@ -166,7 +178,7 @@ void Board::moveDown() {
 
 bool Board::isOver() {
     for (int j = 0; j < width; j++) {
-        if (board[0][j] != "" && board[0][j] != "-")
+        if (board[1][j] != "" && board[1][j] != "-")
             return true;
     }
     return false;
