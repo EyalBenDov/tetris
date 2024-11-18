@@ -23,7 +23,7 @@ std::array<std::array<int, 2>, 4> Shapes::getI(int rotation) {
 std::array<std::array<int, 2>, 4> Shapes::getS(int rotation) {
     int nums[2][4][2] = {
         {{0, 0}, {0, 1}, {1, 1}, {1, 2}},
-        {{1, 0}, {0, 1}, {2, 0}, {1, 1}}
+        {{1, 0}, {0, 1}, {2, 0}, {1, 1}},
     };
     return listToArr(nums[rotation%2]);
 }
@@ -43,8 +43,7 @@ std::array<std::array<int, 2>, 4> Shapes::getL(int rotation) {
         {{0, 0}, {0, 1}, {0, 2}, {-1, 0}},
         {{0, 1}, {-1, 1}, {1, 1}, {1, 0}},
     };
-    std::array<std::array<int, 2>, 4> test = listToArr(nums[rotation]);
-    return test;
+    return listToArr(nums[rotation%4]);
 }
 std::array<std::array<int, 2>, 4> Shapes::getJ(int rotation) {
     int nums[4][4][2] = {
@@ -53,7 +52,7 @@ std::array<std::array<int, 2>, 4> Shapes::getJ(int rotation) {
         {{0, 0}, {1, 0}, {0, 1}, {0, 2}},
         {{0, 0}, {1, 0}, {2, 0}, {2, 1}}
     };
-    return listToArr(nums[rotation]);
+    return listToArr(nums[rotation%4]);
 }
 
 std::array<std::array<int, 2>, 4> Shapes::getT(int rotation) {
@@ -63,7 +62,7 @@ std::array<std::array<int, 2>, 4> Shapes::getT(int rotation) {
         {{0, 1}, {1, 1}, {2, 1}, {1, 2}},
         {{1, 0}, {1, 1}, {1, 2}, {0, 1}},
     };
-return listToArr(nums[rotation]);
+return listToArr(nums[rotation%4]);
 }
 
 std::array<std::array<int, 2>, 4> Shapes::getShape(int rotation) {

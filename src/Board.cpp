@@ -31,7 +31,7 @@ void Board::newPiece() {
     Shapes newShape = Shapes(latestShape);
     std::array<std::array<int, 2>, 4> points = newShape.getShape(0);
     currentRotation = 0;
-    location[0] = width/2;
+    location[0] = width/2-1;
     location[1] = 0;
     for (int i = 0; i < 4; i++) {
         board[location[1]+points[i][1]][location[0]+points[i][0]] = "-";
@@ -81,13 +81,16 @@ void Board::rotatePiece() {
         board[location[1] + points[i][1]][location[0] + points[i][0]] = "-";
     }
 }
+
 void Board::printBoard() {
-    std::cout << "\x1B[2J";
+    system("clear");
+    std::string newBoard = "";
     std::string line = "";
     for (int i = 0; i < width*2; i++) {
         line += "─";
     }
-    std::cout << "┌" << line << "┐" << std::endl;
+    // newBoard += "┌" + line + "┐\n";
+    std::cout << "┌" + line + "┐" << std::endl;
     std::string clearEffects = "\x1B[0m";
     for (int i = 0; i < height; i++) {
         std::string currentRow = "│";
@@ -103,28 +106,32 @@ void Board::printBoard() {
             }
         }
         currentRow += "│";
+        // newBoard += currentRow + "\n";
         std::cout << currentRow << std::endl;
     }
-    std::cout << "└" << line << "┘";
+    // new_board += "└" + line + "┘";
+    std::cout << "└" + line + "┘" << std::endl;
+    // const char *newBoardChar = newBoard.c_str();
+    // std::cout << newBoardChar;
 }
 // TODO: FINISH FUNCTION
 int Board::updateBoard() {
     Shapes shape = Shapes(latestShape);
-    std::array<std::array<int, 2>, 4> points = shape.getShape(latestShape);
+    std::array<std::array<int, 2>, 4> points = shape.getShape(currentRotation);
     bool stopMoving = false;
     for (int i = 0; i < 4; i += 1) {
-        if (points[i][1]+1 >= height) {
+        if (points[i][1]+location[1] >= height-1) {
             stopMoving = true;
             break;
         }
-        else if (board[points[i][1]+1][points[i][0]] != "" && board[points[i][1]+1][points[i][0]] != "-") {
+        if (board[points[i][1]+1][points[i][0]] != "" && board[points[i][1]+1][points[i][0]] != "-") {
             stopMoving = true;
             break;
         }
     }
     if (!stopMoving) return 0;
     for (int i = 0; i < 4; i += 1) { 
-        board[points[i][1]][points[i][0]] = currentColor + "  ";
+        board[location[1] + points[i][1]][location[0] + points[i][0]] = colorList[latestShape] + "  ";
     }
     bool bottom_full = true;
     while (bottom_full) {
@@ -135,7 +142,7 @@ int Board::updateBoard() {
             }
         }
         if (!bottom_full) break;
-        for (int i = height-1; i > 0; i++) {
+        for (int i = height-1; i > 1; i++) {
             for (int j = 0; j < width; j++) {
                 board[i][j] = board[i-1][j];
             }
