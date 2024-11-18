@@ -64,6 +64,7 @@ void Board::movePiece(int direction) {
     }
     location[0] += direction;
 }
+
 void Board::rotatePiece() {
     Shapes shape = Shapes(latestShape);
     std::array<std::array<int, 2>, 4> points = shape.getShape(currentRotation+1);
@@ -89,7 +90,7 @@ void Board::rotatePiece() {
 
 void Board::printBoard() {
     system("clear");
-    std::cout << "\033[0;0H";
+    // std::cout << "\033[0;0H";
     std::cout << "\033[0;0f";
     std::cout << "\n";
     std::cout << "\033[8m";
@@ -101,7 +102,7 @@ void Board::printBoard() {
     }
     // newBoard += "┌" + line + "┐\n";
     std::string clearEffects = "\x1B[0m";
-    std::cout << clearEffects + "┌" + line + "┐" + "\033[8m" << std::endl;
+    std::cout << "\033[2;0" + clearEffects + "┌" + line + "┐" + "\033[8m" << std::endl;
     for (int i = 0; i < height; i++) {
         std::string currentRow = clearEffects + "│";
         for (int j = 0; j < width; j++) {
@@ -117,12 +118,11 @@ void Board::printBoard() {
         }
         currentRow += clearEffects + "│\033[8m";
         // newBoard += currentRow + "\n";
-        std::cout << clearEffects + currentRow  + "\033[8m" << std::endl;
+        std::string position = "\033[" + std::to_string(i+3) + ";0f";
+        std::cout << position + clearEffects + currentRow  + "\033[8m" << std::endl;
     }
     // new_board += "└" + line + "┘";
     std::cout << clearEffects + "└" + line + "┘" + "\033[8m" << std::endl;
-    std::cout << "\033[0;0H";
-    std::cout << "\033[0;0f";
     // const char *newBoardChar = newBoard.c_str();
     // std::cout << newBoardChar;
 }
