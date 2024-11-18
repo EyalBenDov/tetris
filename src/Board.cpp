@@ -2,10 +2,11 @@
 #include <string>
 #include <cstdlib>
 #include <random>
+#include <unistd.h>
 #include "../include/Board.hpp"
 #include "../include/Shapes.hpp"
 
-const std::string colorList[7] = {"\x1B[48;5;1m", "\x1B[48;5;2m", "\x1B[48;5;4m", "\x1B[48;5;6m", "\x1B[48;5;7m", "\x1B[48;5;8m", "\x1B[48;5;28m"};
+const std::string colorList[7] = {"\x1B[48;5;196m", "\x1B[48;5;208m", "\x1B[48;5;39m", "\x1B[48;5;190m", "\x1B[48;5;201m", "\x1B[48;5;15m", "\x1B[48;5;28m"};
 
 Board::Board() {
     location[0] = 0;
@@ -88,6 +89,8 @@ void Board::rotatePiece() {
 
 void Board::printBoard() {
     system("clear");
+    std::cout << "\033[0;0H";
+    std::cout << "\033[0;0f";
     std::cout << "\n";
     std::cout << "\033[8m";
     std::cout << "\033[0;0";
@@ -98,26 +101,28 @@ void Board::printBoard() {
     }
     // newBoard += "┌" + line + "┐\n";
     std::string clearEffects = "\x1B[0m";
-    std::cout << clearEffects << "┌" + line + "┐" << std::endl;
+    std::cout << clearEffects + "┌" + line + "┐" + "\033[8m" << std::endl;
     for (int i = 0; i < height; i++) {
-        std::string currentRow = "│";
+        std::string currentRow = clearEffects + "│";
         for (int j = 0; j < width; j++) {
             std::string current = board[i][j];
             if (current == "-") {
-                currentRow += colorList[latestShape] + "  " + clearEffects;
+                currentRow += colorList[latestShape] + "  " + clearEffects + "\033[8m";
             } else if (current == "") {
-                currentRow += clearEffects + "  ";
+                currentRow += clearEffects + "  " + "\033[8m";
             }
             else {
-                currentRow += current + clearEffects;
+                currentRow += current + clearEffects + "\033[8m";
             }
         }
-        currentRow += "│";
+        currentRow += clearEffects + "│\033[8m";
         // newBoard += currentRow + "\n";
-        std::cout << currentRow << std::endl;
+        std::cout << clearEffects + currentRow  + "\033[8m" << std::endl;
     }
     // new_board += "└" + line + "┘";
-    std::cout << "└" + line + "┘" << std::endl;
+    std::cout << clearEffects + "└" + line + "┘" + "\033[8m" << std::endl;
+    std::cout << "\033[0;0H";
+    std::cout << "\033[0;0f";
     // const char *newBoardChar = newBoard.c_str();
     // std::cout << newBoardChar;
 }

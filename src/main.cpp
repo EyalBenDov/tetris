@@ -22,13 +22,17 @@ int main() {
     board.printBoard();
     std::cout << "\033[?25l";
     while (true) {
+        std::cout << "\033[0;0H";
+        std::cout << "\033[0;0f";
         std::cout << "\033[8m";
         bool change = false;
         if (keyPressed(0x0C)) break;
         if (keyPressed(0x7E)) {
-            if (up_held == false) board.rotatePiece();
-            up_held = true;
-            change = true;
+            if (up_held == false) {
+                board.rotatePiece();
+                up_held = true;
+                change = true;
+            }
         } else {
             up_held = false;
         }
@@ -51,7 +55,7 @@ int main() {
             left_held = false;
         }
         if (keyPressed(0x7D)) {
-            downDelay = 200;
+            downDelay = 50;
         } else {
             downDelay = 400;
         }
@@ -67,9 +71,11 @@ int main() {
             }
             board.moveDown();
         }
-        if (change)
-            board.printBoard();
-            std::cout << "\033[8m";
+        if (change) {
+                std::cout << "\033[0;0H";
+                std::cout << "\033[8m";
+                board.printBoard();
+        }
     }
     std::cout << "\033[?25h";
     std::cout << "\033[28m";
