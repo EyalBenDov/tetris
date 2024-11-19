@@ -74,6 +74,9 @@ void Board::rotatePiece() {
         if (x >= width || x < 0) {
             valid = false;
         } 
+	if (board[location[1]+points[i][1]][x] != "" && board[location[1]+points[i][1]][x] != "-") {
+	    valid = false;
+	}
     }
     if (!valid) {
         return;
